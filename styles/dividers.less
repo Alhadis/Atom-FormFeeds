@@ -1,0 +1,41 @@
+@import "ui-variables";
+@import "./variables.less";
+
+// Border-style form-feeds
+@{ff-selector}::before{
+	content: "";
+	position: absolute;
+	width: 100%;
+	margin-top: .65em;
+	border-top: 1px solid;
+}
+
+// Emacs-like `^L' notation
+@{ff-caret} @{ff-selector}::before{
+	content: "^L";
+	width: 1em;
+	color: #f00;
+}
+
+// UX garnish
+.syntax--isolated@{ff-selector}{
+	cursor: pointer;
+	
+	&::after{
+		position:   absolute;
+		content:    "";
+		left:       0;
+		right:      0;
+		height:     ~"calc(var(--ff-line-height) * .75)";
+		margin-top: ~"calc(var(--ff-line-height) * .25 / 2)";
+	}
+	
+	&:hover::before{
+		filter: ~"brightness(150%);"
+	}
+}
+
+// Hide form-feeds in particular editors
+@{ff-hide}::before{
+	content: none;
+}

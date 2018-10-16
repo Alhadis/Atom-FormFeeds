@@ -1,0 +1,23 @@
+scopeName: "hidden.form-feed"
+injectionSelector: "text, source"
+
+patterns: [
+	
+	# Form-feeds occupying a line without non-whitespace characters
+	{match: "^[ \\t]+\\f[ \\t]+$", name: "punctuation.whitespace.isolated.padded.both.form-feed"}
+	{match: "^[ \\t]+\\f$",        name: "punctuation.whitespace.isolated.padded.left.form-feed"}
+	{match: "^\\f[ \\t]+$",        name: "punctuation.whitespace.isolated.padded.right.form-feed"}
+	{match: "^\\f$",               name: "punctuation.whitespace.isolated.unpadded.form-feed"}
+	
+	# Start of line
+	{match: "^[ \\t]+\\f",         name: "punctuation.whitespace.leading.padded.left.form-feed"}
+	{match: "^\\f",                name: "punctuation.whitespace.leading.unpadded.form-feed"}
+	
+	# End of line
+	{match: "\\f[ \\t]+$",         name: "punctuation.whitespace.trailing.padded.right.form-feed"}
+	{match: "\\f$",                name: "punctuation.whitespace.trailing.unpadded.form-feed"}
+	
+	# Anywhere else
+	name: "punctuation.whitespace.inline.form-feed"
+	match: "\\f"
+]
