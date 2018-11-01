@@ -1,7 +1,14 @@
+// Base selector which targets a tokenised form-feed within a buffer
 @ff-selector: ~".syntax--punctuation.syntax--whitespace.syntax--form-feed";
-@ff-caret:    ~".ff-caret-notation";
-@ff-hide:     ~".ff-hide";
 
+
+// Body classes toggling different placeholder styles
+@ff-border:   ~".ff-style-border";
+@ff-caret:    ~".ff-style-caret";
+@ff-hide:     ~".ff-style-none";
+
+
+// Variables which need programmatic updating when settings change
 :root{
 	--ff-line-height: 1.5em;
 }

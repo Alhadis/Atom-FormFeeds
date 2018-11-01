@@ -6,11 +6,24 @@
 	"license": "ISC",
 	"keywords": ["form-feed", "whitespace", "page-break", "line-break"],
 	"configSchema": {
-		"useCaretNotation": {
-			"title": "Use caret notation",
-			"description": "Render form-feeds as `^L` using [caret notation](https://en.wikipedia.org/wiki/Caret_notation).",
-			"type": "boolean",
-			"default": true
+		"placeholderStyle": {
+			"title": "Placeholder style",
+			"description": "How form-feed indicators should be rendered inside a buffer.",
+			"type": "string",
+			"default": "border",
+			"enum": [{
+				"title": "None",
+				"value": "",
+				"description": "Don't show form-feed placeholders. Users must define their appearance using their stylesheet."
+			},{
+				"title": "Horizontal border",
+				"value": "border",
+				"description": "Horizontal divider spanning the editor's full width."
+			},{
+				"title": "Caret notation",
+				"value": "caret",
+				"description": "Render form-feeds as `^L` using [caret notation](https://en.wikipedia.org/wiki/Caret_notation)."
+			}]
 		}
 	}
 }
