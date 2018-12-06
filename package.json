@@ -11,11 +11,19 @@
 			"description": "How form-feed indicators are rendered inside a text-buffer.",
 			"type": "string",
 			"default": "border",
-			"enum": [
-				{"value": "none",   "title": "None", "description": "Don't show placeholders. Users must define the appearance of form-feeds using their stylesheet"},
-				{"value": "border", "title": "Horizontal border", "description": "Horizontal divider spanning the editor's full width"},
-				{"value": "caret",  "title": "Caret notation", "description": "Render form-feeds as `^L` using caret notation."}
-			]
+			"enum": [{
+				"value": "none",
+				"title": "None",
+				"description": "Don't show placeholders. Users must define the appearance of form-feeds using their stylesheet"
+			},{
+				"value": "border",
+				"title": "Horizontal border",
+				"description": "Horizontal divider spanning the editor's full width"
+			},{
+				"value": "caret",
+				"title": "Caret notation",
+				"description": "Render form-feeds as `^L` using caret notation."
+			}]
 		}
 	}
 }

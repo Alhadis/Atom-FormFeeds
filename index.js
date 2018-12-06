@@ -1,5 +1,5 @@
 "use strict";
-
+
 const {CompositeDisposable} = require("atom");
 
 let disposables = null;
@@ -18,8 +18,8 @@ module.exports = {
 			classes.toggle("ff-style-border", "border" === type);
 			classes.toggle("ff-style-caret",  "caret"  === type);
 			classes.toggle("ff-style-none",   "none"   === type);
-		});
-	
+		}));
+	},
 	
 	// Free-up memoery when deactivating package
 	deactivate(){
