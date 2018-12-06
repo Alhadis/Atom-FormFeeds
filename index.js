@@ -8,10 +8,9 @@ module.exports = {
 	
 	/**
 	 * Initialise the package and register event handlers.
-	 * @param {Object} [state={}]
 	 * @public
 	 */
-	activate(state = {}){
+	activate(){
 		if(null !== disposables)
 			disposables.dispose();
 			
@@ -108,10 +107,11 @@ module.exports = {
 	 */
 	mutate(fn){
 		const editor = atom.workspace.getActiveTextEditor();
-		editor && editor.transact(100, () => hasSelectedText(editor)
+		editor && editor.transact(100, () => this.hasSelectedText(editor)
 			? editor.mutateSelectedText(selection => {
 				const output = fn(selection.getText(), selection, editor);
-				selection.insertText(output, {select: true})})
+				selection.insertText(output, {select: true});
+			})
 			: editor.setText(fn(editor.getText(), null, editor)));
 	},
 	

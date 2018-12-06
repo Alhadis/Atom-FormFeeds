@@ -7,12 +7,14 @@
 	"keywords": ["form-feed", "whitespace", "page-break", "line-break"],
 	"configSchema": {
 		"wrappedCycling": {
+			"order": 1,
 			"title": "Wrapped feed-cycling",
 			"description": "Jump to the other end of the buffer when cycling past the first or last row",
 			"type": "boolean",
 			"default": "true"
 		},
 		"placeholderStyle": {
+			"order": 2,
 			"title": "Placeholder style",
 			"description": "How form-feed indicators are rendered inside a text-buffer.",
 			"type": "string",
