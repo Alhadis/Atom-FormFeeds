@@ -4,5 +4,5 @@
 		body: "\f"
 	
 	"Insert form-feed (C-style escape)":
-		prefix: "\\\\f"
+		prefix: "\\f"
 		body: "\f"

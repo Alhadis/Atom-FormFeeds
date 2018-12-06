@@ -1,0 +1,5 @@
+".platform-darwin,
+ .platform-win32,
+ .platform-linux":
+	"ctrl-[": "form-feeds:go-to-prev-feed"
+	"ctrl-]": "form-feeds:go-to-next-feed"

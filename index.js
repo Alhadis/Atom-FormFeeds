@@ -26,39 +26,11 @@ module.exports = {
 		
 		// Commands to jump between form-feeds in a document
 		disposables.add(atom.commands.add("atom-text-editor", {
-			"form-feeds:go-to-next-feed": () => this.goTo(this.getNearestFeed()),
-			"form-feeds:go-to-prev-feed": () => this.goTo(this.getNearestFeed(true)),
+			"form-feeds:go-to-prev-feed": async () => this.goTo((await this.getClosestFeeds())[0]),
+			"form-feeds:go-to-next-feed": async () => this.goTo((await this.getClosestFeeds())[1]),
 			"form-feeds:insert-feed":     () => this.filter(text => text + "\f"),
 			"form-feeds:strip-feeds":     () => this.filter(text => text.replace(/\f/g, "")),
 		}));
-	},
-	
-	
-	/**
-	 * Move the current editor's cursor to the next form-feed.
-	 * @internal
-	 */
-	async goTo(point){
-		const editor = atom.workspace.getActiveTextEditor();
-		if(point && editor){
-			editor.setCursorBufferPosition(point);
-			editor.scrollToBufferPosition(point, {center: true});
-		}
-	},
-	
-	
-	async getNearestFeed(backwards = false){
-		const editor = atom.workspace.getActiveTextEditor();
-		if(editor){
-			const cursor = editor.getLastCursor();
-			const curPos = cursor.getBufferPosition();
-			const endPos = editor.buffer.getEndPosition();
-			const [start, end] = backwards
-				? [curPos, [0, 0]]
-				: [curPos, endPos];
-			return editor.buffer.findInRange(/\f/, {start, end});
-		}
-		return null;
 	},
 	
 	
@@ -70,6 +42,56 @@ module.exports = {
 		if(null !== disposables){
 			disposables.dispose();
 			disposables = null;
+		}
+	},
+	
+	
+	/**
+	 * Return an {@link Array} of buffer-rows containing form-feeds.
+	 * @return {Number[]}
+	 * @internal
+	 */
+	async getFeedRows(){
+		const editor = atom.workspace.getActiveTextEditor();
+		if(!editor) return [];
+		const points = await editor.buffer.findAll(/\f/);
+		return points.map(point => point.start.row);
+	},
+	
+	
+	/**
+	 * Return an array containing the index of the previous and next feed rows.
+	 * @return {Number[]}
+	 * @internal
+	 */
+	async getClosestFeeds(){
+		const editor = atom.workspace.getActiveTextEditor();
+		if(!editor) return [];
+		let rows = await this.getFeedRows();
+		if(rows && rows.length){
+			const cursor = editor.getLastCursor();
+			const row    = cursor.getBufferRow();
+			return [
+				rows.filter(n => n < row).sort().pop(),
+				rows.filter(n => n > row).sort().shift(),
+			];
+		}
+	},
+	
+	
+	/**
+	 * Move the current editor's cursor to the designed row.
+	 * @param {Number} [row=-1]
+	 * @internal
+	 */
+	async goTo(row = -1){
+		if(row < 0) return;
+		const editor = atom.workspace.getActiveTextEditor();
+		if(editor){
+			const cursor = editor.getLastCursor();
+			const column = cursor.getBufferColumn();
+			editor.setCursorBufferPosition([row, column]);
+			editor.moveToFirstCharacterOfLine();
 		}
 	},
 	
