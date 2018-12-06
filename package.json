@@ -8,22 +8,14 @@
 	"configSchema": {
 		"placeholderStyle": {
 			"title": "Placeholder style",
-			"description": "How form-feed indicators should be rendered inside a buffer.",
+			"description": "How form-feed indicators are rendered inside a text-buffer.",
 			"type": "string",
 			"default": "border",
-			"enum": [{
-				"title": "None",
-				"value": "",
-				"description": "Don't show form-feed placeholders. Users must define their appearance using their stylesheet."
-			},{
-				"title": "Horizontal border",
-				"value": "border",
-				"description": "Horizontal divider spanning the editor's full width."
-			},{
-				"title": "Caret notation",
-				"value": "caret",
-				"description": "Render form-feeds as `^L` using [caret notation](https://en.wikipedia.org/wiki/Caret_notation)."
-			}]
+			"enum": [
+				{"value": "none",   "title": "None", "description": "Don't show placeholders. Users must define the appearance of form-feeds using their stylesheet"},
+				{"value": "border", "title": "Horizontal border", "description": "Horizontal divider spanning the editor's full width"},
+				{"value": "caret",  "title": "Caret notation", "description": "Render form-feeds as `^L` using caret notation."}
+			]
 		}
 	}
 }

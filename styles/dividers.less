@@ -2,7 +2,7 @@
 @import "./variables.less";
 
 // Border-style form-feeds
-@{ff-selector}::before{
+@{ff-border} @{ff-selector}::before{
 	content: "";
 	position: absolute;
 	width: 100%;
@@ -15,22 +15,4 @@
 	content: "^L";
 	width: 1em;
 	color: #f00;
-}
-
-// UX garnish
-.syntax--isolated@{ff-selector}{
-	cursor: pointer;
-	
-	&::after{
-		position:   absolute;
-		content:    "";
-		left:       0;
-		right:      0;
-		height:     ~"calc(var(--ff-line-height) * .75)";
-		margin-top: ~"calc(var(--ff-line-height) * .25 / 2)";
-	}
-	
-	&:hover::before{
-		filter: ~"brightness(150%);"
-	}
 }
