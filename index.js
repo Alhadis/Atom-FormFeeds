@@ -67,15 +67,20 @@ module.exports = {
 	async getClosestFeeds(){
 		const editor = atom.workspace.getActiveTextEditor();
 		if(!editor) return [];
-		let rows = await this.getFeedRows();
+		const rows = await this.getFeedRows();
 		if(rows && rows.length){
 			const cursor = editor.getLastCursor();
 			const row    = cursor.getBufferRow();
+			const end    = editor.getLastBufferRow();
+			const wrap   = atom.config.get("form-feeds.wrappedCycling");
+			const first  = Math.min(...rows);
+			const last   = Math.max(...rows);
 			return [
-				rows.filter(n => n < row).sort().pop(),
-				rows.filter(n => n > row).sort().shift(),
+				rows.filter(n => n < row).sort().pop()   || (wrap && row <= 1   ? last : 0),
+				rows.filter(n => n > row).sort().shift() || (wrap && row >= end ? first : end),
 			];
 		}
+		else return [];
 	},
 	
 	
