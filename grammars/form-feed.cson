@@ -1,23 +1,60 @@
 scopeName: "hidden.form-feed"
 injectionSelector: "text, source"
+patterns: [include: "#main"]
+
+repository:
+	main:
+		patterns: [
+			# Form-feeds occupying a line without non-whitespace characters
+			{include: "#isolatedPaddedBothSides"}
+			{include: "#isolatedPaddedLeft"}
+			{include: "#isolatedPaddedRight"}
+			{include: "#isolatedUnpadded"}
+			
+			# Start of line
+			{include: "#leadingPadded"}
+			{include: "#leadingUnpadded"}
+			
+			# End of line
+			{include: "#trailingPadded"}
+			{include: "#trailingUnpadded"}
+			
+			# Anywhere else
+			{include: "#inlined"}
+		]
 
-patterns: [
+	isolatedPaddedBothSides:
+		name: "punctuation.whitespace.isolated.padded.both.form-feed"
+		match: "^[ \\t]+\\f[ \\t]+$"
 	
-	# Form-feeds occupying a line without non-whitespace characters
-	{match: "^[ \\t]+\\f[ \\t]+$", name: "punctuation.whitespace.isolated.padded.both.form-feed"}
-	{match: "^[ \\t]+\\f$",        name: "punctuation.whitespace.isolated.padded.left.form-feed"}
-	{match: "^\\f[ \\t]+$",        name: "punctuation.whitespace.isolated.padded.right.form-feed"}
-	{match: "^\\f$",               name: "punctuation.whitespace.isolated.unpadded.form-feed"}
+	isolatedPaddedLeft:
+		name: "punctuation.whitespace.isolated.padded.left.form-feed"
+		match: "^[ \\t]+\\f$"
 	
-	# Start of line
-	{match: "^[ \\t]+\\f",         name: "punctuation.whitespace.leading.padded.left.form-feed"}
-	{match: "^\\f",                name: "punctuation.whitespace.leading.unpadded.form-feed"}
+	isolatedPaddedRight:
+		name: "punctuation.whitespace.isolated.padded.right.form-feed"
+		match: "^\\f[ \\t]+$"
+
+	isolatedUnpadded:
+		name: "punctuation.whitespace.isolated.unpadded.form-feed"
+		match: "^\\f$"
+
+	leadingPadded:
+		name: "punctuation.whitespace.leading.padded.left.form-feed"
+		match: "^[ \\t]+\\f"
 	
-	# End of line
-	{match: "\\f[ \\t]+$",         name: "punctuation.whitespace.trailing.padded.right.form-feed"}
-	{match: "\\f$",                name: "punctuation.whitespace.trailing.unpadded.form-feed"}
+	leadingUnpadded:
+		name: "punctuation.whitespace.leading.unpadded.form-feed"
+		match: "^\\f"
+
+	trailingPadded:
+		name: "punctuation.whitespace.trailing.padded.right.form-feed"
+		match: "\\f[ \\t]+$"
 	
-	# Anywhere else
-	name: "punctuation.whitespace.inline.form-feed"
-	match: "\\f"
-]
+	trailingUnpadded:
+		name: "punctuation.whitespace.trailing.unpadded.form-feed"
+		match: "\\f$"
+
+	inlined:
+		name: "punctuation.whitespace.inline.form-feed"
+		match: "\\f"
