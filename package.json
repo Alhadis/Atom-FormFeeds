@@ -33,5 +33,20 @@
 				"description": "Render form-feeds as `^L` using caret notation."
 			}]
 		}
+	},
+	"engines": {
+		"atom": ">=1.25.0"
+	},
+	"scripts": {
+		"lint": "npx eslint .",
+		"test": "atom -t spec/"
+	},
+	"atomTestRunner": "atom-mocha",
+	"devDependencies": {
+		"@alhadis/eslint-config": "^1.2.0",
+		"atom-mocha": "^2.0.7",
+		"mocha":      ">=5.2.0",
+		"chai":       ">=4.2.0",
+		"eslint":     "^5.9.0"
 	}
 }
