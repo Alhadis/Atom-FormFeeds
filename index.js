@@ -27,8 +27,7 @@ module.exports = {
 		disposables.add(atom.commands.add("atom-text-editor", {
 			"form-feeds:go-to-prev-feed": async () => this.goTo((await this.getClosestFeeds())[0]),
 			"form-feeds:go-to-next-feed": async () => this.goTo((await this.getClosestFeeds())[1]),
-			"form-feeds:insert-feed":     () => this.filter(text => text + "\f"),
-			"form-feeds:strip-feeds":     () => this.filter(text => text.replace(/\f/g, "")),
+			"form-feeds:strip-feeds":     () => this.mutate.bind(this)(text => text.replace(/\f/g, "")),
 		}));
 	},
 	
