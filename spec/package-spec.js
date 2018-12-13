@@ -2,7 +2,7 @@
 
 const path = require("path");
 const root = path.resolve(__dirname, "..");
-const {Point} = require("atom");
+const {Point, Range} = require("atom");
 
 describe("Form-feeds", () => {
 	let editor = null;
@@ -79,35 +79,65 @@ describe("Form-feeds", () => {
 	});
 	
 	describe("Commands", () => {
-		let cursor = null;
-		const next = async () => atom.commands.dispatch(editor.element, "form-feeds:go-to-next-feed");
-		const prev = async () => atom.commands.dispatch(editor.element, "form-feeds:go-to-prev-feed");
-		
-		before(() => {
-			cursor = editor.getLastCursor();
-			cursor.setBufferPosition(0, 0);
-			editor.setText([..."ABCDEF"].join("\n\f\n"));
+		describe("Navigation", () => {
+			let cursor = null;
+			const next = async () => atom.commands.dispatch(editor.element, "form-feeds:go-to-next-feed");
+			const prev = async () => atom.commands.dispatch(editor.element, "form-feeds:go-to-prev-feed");
+			
+			before(() => {
+				cursor = editor.getLastCursor();
+				cursor.setBufferPosition(0, 0);
+				editor.setText([..."ABCDEF"].join("\n\f\n"));
+			});
+			
+			it("advances to the next form-feed when running `go-to-next-feed`", async () => {
+				await next();
+				cursor.getBufferPosition().should.eql(new Point(1, 0));
+				await next();
+				await next();
+				cursor.getBufferPosition().should.eql(new Point(5, 0));
+			});
+			
+			it("recedes to the previous form-feed when running `go-to-prev-feed`", async () => {
+				await prev(); cursor.getBufferPosition().should.eql(new Point(3, 0));
+				await prev(); cursor.getBufferPosition().should.eql(new Point(1, 0));
+			});
+			
+			it("wraps across the buffer if cursor is already at the start or end", async () => {
+				await prev(); cursor.getBufferPosition().should.eql(new Point(9, 0));
+				await prev(); cursor.getBufferPosition().should.eql(new Point(7, 0));
+				await next(); cursor.getBufferPosition().should.eql(new Point(9, 0));
+				await next(); cursor.getBufferPosition().should.eql(new Point(10, 0));
+				await next(); cursor.getBufferPosition().should.eql(new Point(1, 0));
+			});
 		});
 		
-		it("advances to the next form-feed when running `go-to-next-feed`", async () => {
-			await next();
-			cursor.getBufferPosition().should.eql(new Point(1, 0));
-			await next();
-			await next();
-			cursor.getBufferPosition().should.eql(new Point(5, 0));
-		});
-		
-		it("recedes to the previous form-feed when running `go-to-prev-feed`", async () => {
-			await prev(); cursor.getBufferPosition().should.eql(new Point(3, 0));
-			await prev(); cursor.getBufferPosition().should.eql(new Point(1, 0));
-		});
-		
-		it("wraps across the buffer if cursor is already at the start or end", async () => {
-			await prev(); cursor.getBufferPosition().should.eql(new Point(9, 0));
-			await prev(); cursor.getBufferPosition().should.eql(new Point(7, 0));
-			await next(); cursor.getBufferPosition().should.eql(new Point(9, 0));
-			await next(); cursor.getBufferPosition().should.eql(new Point(10, 0));
-			await next(); cursor.getBufferPosition().should.eql(new Point(1, 0));
+		describe("Deletion", () => {
+			let range = null;
+			
+			beforeEach(() => {
+				range = new Range(new Point(2, 1), new Point(6, 1));
+				editor.setText("A\n\f\nB\n\f\nC\n\f\nD\n\f");
+				editor.getLastSelection().setBufferRange(range);
+			});
+			
+			when("text is selected when running `form-feeds:strip-feeds`", () => {
+				it("deletes only strips within a selected range`", async () => {
+					await atom.commands.dispatch(editor.element, "form-feeds:strip-feeds");
+					editor.getText().should.equal("A\n\f\nB\n\nC\n\nD\n\f");
+					editor.getLastSelection().getBufferRange().should.eql(range);
+				});
+			})
+			
+			when("nothing is selected", () => {
+				it("deletes every form-feed in the entire buffer", async () => {
+					range = new Range(new Point(0, 0), new Point(0, 0));
+					editor.getLastSelection().setBufferRange(range);
+					await atom.commands.dispatch(editor.element, "form-feeds:strip-feeds");
+					editor.getText().should.equal("A\n\nB\n\nC\n\nD\n");
+					editor.getLastSelection().getBufferRange().should.eql(range);
+				});
+			});
 		});
 	});
 });
