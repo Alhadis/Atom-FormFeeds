@@ -8,9 +8,11 @@ describe("Form-feeds", () => {
 	let editor = null;
 	
 	before(async () => {
-		await atom.packages.loadPackage(root);
-		await atom.packages.activatePackage("form-feeds");
-		await atom.packages.activatePackage("language-text");
+		await Promise.all([
+			atom.packages.loadPackage(root),
+			atom.packages.activatePackage("form-feeds"),
+			atom.packages.activatePackage("language-text"),
+		]);
 		
 		const pane = atom.workspace.getActivePane();
 		pane.addItem(editor = atom.workspace.buildTextEditor({softTabs: false}));

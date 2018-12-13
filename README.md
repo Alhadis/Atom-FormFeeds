@@ -1,5 +1,10 @@
 Form-feed support for Atom
 ==========================
+
+[![Build status: TravisCI][TravisCI-badge]][TravisCI-link]
+[![Build status: AppVeyor][AppVeyor-badge]][AppVeyor-link]
+
+
 Display form-feed characters (`U+000C`) as horizontal dividers in source code.
 
 ![Placeholder preview](preview.png)
@@ -44,3 +49,7 @@ More info
 * [_“What are carriage return, linefeed, and form feed?”_](https://stackoverflow.com/a/3098328)
 
 [Caret notation]: https://en.wikipedia.org/wiki/Caret_notation
+[TravisCI-badge]: https://travis-ci.org/Alhadis/Atom-FormFeeds.svg?branch=master
+[TravisCI-link]:  https://travis-ci.org/Alhadis/Atom-FormFeeds
+[AppVeyor-badge]: https://ci.appveyor.com/api/projects/status/82ue5mapkwsj6x7l?svg=true
+[AppVeyor-link]:  https://ci.appveyor.com/project/Alhadis/atom-formfeeds
