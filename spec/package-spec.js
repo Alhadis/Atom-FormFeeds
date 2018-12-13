@@ -4,15 +4,14 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const {Point, Range} = require("atom");
 
-describe("Form-feeds", () => {
+describe("Form-feeds", function(){
+	this.timeout(6000);
 	let editor = null;
 	
-	before(async () => {
-		await Promise.all([
-			atom.packages.loadPackage(root),
-			atom.packages.activatePackage("form-feeds"),
-			atom.packages.activatePackage("language-text"),
-		]);
+	before("Setting up", async () => {
+		await atom.packages.loadPackage(root);
+		await atom.packages.activatePackage("form-feeds");
+		await atom.packages.activatePackage("language-text");
 		
 		const pane = atom.workspace.getActivePane();
 		pane.addItem(editor = atom.workspace.buildTextEditor({softTabs: false}));
