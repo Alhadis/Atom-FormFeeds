@@ -7,21 +7,40 @@ Display form-feed characters (`U+000C`) as horizontal dividers in source code.
 Inspired by the [MELPA package](https://github.com/wasamasa/form-feed) of the same name.
 
 
-Background
-----------
-Form-feeds are invisible control-characters which force a printer to eject the current page, and resume printing at the top of the next. Form-feeds are legal whitespace in many programming languages (including JavaScript), and they're often used as logical section separators within lengthy code (especially Lisp and C/C++). Emacs renders these characters using its traditional `^L` notation.
-
-
 Features:
 ---------
-*	Switch between three rendering styles
-*	Snippets for inserting form-feeds: `\f`, `^L`
-	(they both do the same thing).
-	
-*	Editor commands for navigating between “feed-stops”:
+* Render form-feeds as horizontal dividers or as `^L` (using [caret notation][])
+* Snippets for inserting form-feeds: `\f`, `^L`
+* Editor commands (without default keybindings)
+	*	`form-feeds:go-to-prev-feed`
+	*	`form-feeds:go-to-next-feed`
+	*	`form-feeds:strip-feeds`
 
-		*	`form-feeds:go-to-prev-feed`
-		*	`form-feeds:go-to-next-feed`
-		*	`form-feeds:strip-feeds`  
-	
-	These have no default keybindings; you'll need to assign them yourself.
+
+Customisation
+-------------
+You can tweak the rendering of form-feed indicators using your stylesheet:
+
+~~~less
+@import "packages/form-feeds/styles/variables.less";
+
+// Thicker border
+@{ff-border} @{ff-selector}::before{
+	border-top-width: 2px;
+}
+
+// Replace `^L` with a green `FF` when `placeholderStyle` is set to "caret"
+@{ff-caret} @{ff-selector}::before{
+	content: "FF";
+	color: #0f0;
+}
+~~~
+
+
+More info
+---------
+* [Caret notation][]
+* [Form-feed characters](https://en.wikipedia.org/wiki/Page_break#Form_feed)
+* [_“What are carriage return, linefeed, and form feed?”_](https://stackoverflow.com/a/3098328)
+
+[Caret notation]: https://en.wikipedia.org/wiki/Caret_notation
