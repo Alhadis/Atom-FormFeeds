@@ -127,7 +127,7 @@ describe("Form-feeds", () => {
 					editor.getText().should.equal("A\n\f\nB\n\nC\n\nD\n\f");
 					editor.getLastSelection().getBufferRange().should.eql(range);
 				});
-			})
+			});
 			
 			when("nothing is selected", () => {
 				it("deletes every form-feed in the entire buffer", async () => {

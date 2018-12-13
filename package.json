@@ -42,6 +42,9 @@
 		"test": "atom -t spec/"
 	},
 	"atomTestRunner": "atom-mocha",
+	"eslintConfig": {
+		"extends": "@alhadis/eslint-config/atom"
+	},
 	"devDependencies": {
 		"@alhadis/eslint-config": "^1.2.0",
 		"atom-mocha": "^2.0.7",
