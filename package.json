@@ -3,6 +3,7 @@
 	"version": "0.0.0",
 	"description": "Display form-feed characters (U+000C) as horizontal dividers in source code.",
 	"author": "John Gardner <gardnerjohng@gmail.com>",
+	"repository": "https://github.com/Alhadis/Atom-FormFeeds",
 	"license": "ISC",
 	"keywords": ["form-feed", "whitespace", "page-break", "line-break"],
 	"configSchema": {
