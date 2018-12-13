@@ -1,20 +1,27 @@
+version: "{build}"
+
 platform: x64
 
+branches:
+    only:
+        - master
+
+build_script:
+    - ps: iex ((new-object net.webclient).DownloadString("https://raw.githubusercontent.com/atom/ci/master/build-package.ps1"))
+
+clone_depth: 10
+
+skip_tags: true
+
 environment:
+    APM_TEST_PACKAGES:
+
     matrix:
-        - nodejs_version: "6"
-        - nodejs_version: "8"
-        - nodejs_version: "10"
+        - ATOM_CHANNEL: stable
+        - ATOM_CHANNEL: beta
 
 install:
-    - ps: Install-Product node $env:nodejs_version
-    - npx --version >NUL 2>&1 || npm install --global npx
-    - npm install
+    - ps: Install-Product node 4
 
-test_script:
-    - node --version
-    - npm --version
-    - npm run --silent lint
-    - npm run --silent test
-
-build: off
+test: off
+deploy: off
