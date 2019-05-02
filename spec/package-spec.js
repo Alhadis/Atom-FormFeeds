@@ -2,6 +2,7 @@
 
 const path = require("path");
 const root = path.resolve(__dirname, "..");
+const wait = n => new Promise(f => setTimeout(f, n));
 const {Point, Range} = require("atom");
 
 describe("Form-feeds", function(){
@@ -58,25 +59,136 @@ describe("Form-feeds", function(){
 	});
 	
 	describe("Placeholders", () => {
-		it("displays window-fitting dividers by default", () => {
-			editor.setText("1\n\n2");
-			const width = editor.editorWidthInChars;
-			editor.setText("1\n\f\n2");
-			editor.getWidth().should.be.above(width);
+		describe("Selection", () => {
+			it("displays window-fitting dividers by default", () => {
+				editor.setText("1\n\n2");
+				const width = editor.editorWidthInChars;
+				editor.setText("1\n\f\n2");
+				editor.getWidth().should.be.above(width);
+			});
+			
+			it("updates <body> classes to match indicator styles", () => {
+				atom.config.get("form-feeds.placeholderStyle").should.equal("border");
+				document.body.should.have.class("ff-style-border");
+				
+				atom.config.set("form-feeds.placeholderStyle", "caret");
+				document.body.should.not.have.class("ff-style-border");
+				document.body.should.have.class("ff-style-caret");
+				
+				atom.config.set("form-feeds.placeholderStyle", "none");
+				document.body.should.not.have.classes("ff-style-border", "ff-style-caret");
+				document.body.should.have.class("ff-style-none");
+				
+				atom.config.set("form-feeds.placeholderStyle", "border");
+				document.body.should.not.have.classes("ff-style-none", "ff-style-caret");
+				document.body.should.have.class("ff-style-border");
+			});
 		});
 		
-		it("updates <body> classes to match indicator styles", () => {
-			atom.config.get("form-feeds.placeholderStyle").should.equal("border");
-			document.body.should.have.class("ff-style-border");
+		describe("Display", () => {
+			const getFeeds = () => editor.element.querySelectorAll(".syntax--form-feed");
+			const border = {borderWidth: "1px 0px 0px", borderStyle: "solid none none", height: "1px"};
 			
-			atom.config.set("form-feeds.placeholderStyle", "caret");
-			document.body.should.not.have.class("ff-style-border");
-			document.body.should.have.class("ff-style-caret");
+			it("centres isolated dividers vertically", () =>
+				assertCentred("10.8px"));
 			
-			atom.config.set("form-feeds.placeholderStyle", "none");
-			document.body.should.not.have.classes("ff-style-border", "ff-style-caret");
-			document.body.should.have.class("ff-style-none");
+			it("avoids superimposing dividers over text", () =>
+				assertBorders("19.6px"));
+			
+			it("hides border if form-feed is surrounded by text", async () => {
+				editor.setText("\nABC\fXYZ\n");
+				await wait(150);
+				const feeds = getFeeds();
+				feeds.should.have.lengthOf(1);
+				window.getComputedStyle(feeds[0], "before").should.include({
+					borderWidth: "0px",
+					borderStyle: "none",
+					display: "inline",
+					position: "static",
+					width: "auto",
+					height: "auto",
+				});
+			});
+			
+			it("keeps dividers aligned when `editor.fontSize` changes", async () => {
+				atom.config.set("editor.fontSize", 24);
+				await wait(250);
+				await assertCentred("17.8px");
+				await assertBorders("33.6px");
+				
+				atom.config.set("editor.fontSize", 10);
+				await wait(250);
+				await assertCentred("8px");
+				await assertBorders("14px");
+				
+				atom.config.set("editor.fontSize", 14);
+				await wait(250);
+				await assertCentred("10.8px");
+				await assertBorders("19.6px");
+			});
+			
+			it("keeps dividers aligned when `editor.lineHeight` changes", async () => {
+				atom.config.set("editor.lineHeight", 3);
+				await wait(250);
+				await assertCentred("20.6px");
+				await assertBorders("39.2px");
+				
+				atom.config.set("editor.fontSize", 24);
+				await wait(250);
+				await assertCentred("34.6px");
+				await assertBorders("67.2px");
+				
+				atom.config.set("editor.lineHeight", 1);
+				await wait(250);
+				await assertCentred("12.2px");
+				await assertBorders("22.4px");
+			});
+			
+			async function assertCentred(midpoint){
+				editor.setText("\n\f\n");
+				await wait(250);
+				const feeds = getFeeds();
+				feeds.should.have.lengthOf(1);
+				
+				const style = window.getComputedStyle(feeds[0], "before");
+				const width = editor.getElement().getWidth() + "px";
+				style.should.include({...border, width, margin: `${midpoint} 0px 0px`});
+			}
+			
+			async function assertBorders(bottomEdge){
+				let feeds, style, width;
+				
+				// Above
+				editor.setText("\n\fABC\n");
+				await wait(250);
+				feeds = getFeeds();
+				feeds.should.have.lengthOf(1);
+				style = window.getComputedStyle(feeds[0], "before");
+				width = editor.getElement().getWidth() + "px";
+				style.should.include({...border, width, margin: "0px"});
+				
+				// Below
+				editor.setText("\nABC\f\n");
+				await wait(250);
+				feeds = getFeeds();
+				feeds.should.have.lengthOf(1);
+				style = window.getComputedStyle(feeds[0], "before");
+				width = editor.getElement().getWidth() + "px";
+				style.should.include({...border, width, margin: `${bottomEdge} 0px 0px`});
+				
+				// Both
+				editor.setText("\n\fABC\f\n");
+				await wait(250);
+				width = editor.getElement().getWidth() + "px";
+				feeds = getFeeds();
+				feeds.should.have.lengthOf(2);
+				window.getComputedStyle(feeds[0], "before").should.include({...border, width, margin: "0px"});
+				window.getComputedStyle(feeds[1], "before").should.include({...border, width, margin: `${bottomEdge} 0px 0px`});
+			}
 		});
+		
+		after("Restoring defaults", () =>
+			atom.config.set("editor", atom.config.defaultSettings.editor));
 	});
 	
 	describe("Commands", () => {
