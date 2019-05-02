@@ -1,5 +1,5 @@
 @import "./variables.less";
-:root{ --form-feed-offset: .65em; }
+:root{ --form-feed-offset: .7em; }
 
 // Border-style form-feeds
 @{ff-border} @{ff-selector}{
@@ -7,7 +7,7 @@
 		content: "";
 		position: absolute;
 		width: 100%;
-		margin-top: var(--form-feed-offset);
+		margin-top: ~"calc(1px + var(--form-feed-offset))";
 		border-top: 1px solid;
 	}
 	

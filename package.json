@@ -44,7 +44,13 @@
 	},
 	"atomTestRunner": "atom-mocha",
 	"eslintConfig": {
-		"extends": "@alhadis/eslint-config/atom"
+		"extends": "@alhadis/eslint-config/atom",
+		"overrides": [{
+			"files": ["index.js"],
+			"rules": {"indent": ["error", "tab", {
+				"ignoredNodes": ["ForOfStatement > ForOfStatement"]
+			}]}
+		}]
 	},
 	"devDependencies": {
 		"@alhadis/eslint-config": "^1.2.0",

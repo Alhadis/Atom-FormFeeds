@@ -29,6 +29,12 @@ module.exports = {
 			"form-feeds:go-to-next-feed": async () => this.goTo((await this.getClosestFeeds())[1]),
 			"form-feeds:strip-feeds":     () => this.mutate.bind(this)(text => text.replace(/\f/g, "")),
 		}));
+		
+		// Setup dynamic CSS variables
+		disposables.add(atom.config.observe("editor.lineHeight", value => {
+			const rule = this.findCSSRule(":root", "--form-feed-offset");
+			rule && rule.style.setProperty("--form-feed-offset", `${0.7 * value / 1.5}em`);
+		}));
 	},
 	
 	
@@ -124,5 +130,28 @@ module.exports = {
 	 */
 	hasSelectedText(editor){
 		return !!(editor && editor.getSelections().map(s => s.getText()).join("").length);
+	},
+	
+	
+	/**
+	 * Locate the first CSS rule matching the specified selector/property.
+	 * @internal
+	 * @todo Replace this with CSSQuery/CSSq when/if I resurrect it…
+	 * @param {String|RegExp} selector - All or part of expected `selectorText`
+	 * @param {String|RegExp} property - Name of queried CSS property
+	 * @param {String|RegExp} [value]  - Expected property value
+	 * @return {CSSStyleRule}
+	 */
+	findCSSRule(selector, property, value = /(?:)/){
+		const match = (pattern, input) => "string" === typeof pattern
+			? pattern === String(input)
+			: pattern.test(input);
+		for(const sheet of document.styleSheets)
+		for(const rule of sheet.rules)
+			if(match(selector, rule.selectorText)
+			&& match(value, rule.style[property])
+			&& [...rule.style].includes(property))
+				return rule;
+		return null;
 	},
 };
