@@ -1,12 +1,24 @@
 @import "./variables.less";
+:root{ --form-feed-offset: .65em; }
 
 // Border-style form-feeds
-@{ff-border} @{ff-selector}::before{
-	content: "";
-	position: absolute;
-	width: 100%;
-	margin-top: .65em;
-	border-top: 1px solid;
+@{ff-border} @{ff-selector}{
+	&::before{
+		content: "";
+		position: absolute;
+		width: 100%;
+		margin-top: var(--form-feed-offset);
+		border-top: 1px solid;
+	}
+	
+	&@{ff-leading}::before{
+		margin-top: 0;
+	}
+	
+	&@{ff-trailing}::before{
+		margin-top: ~"calc(var(--form-feed-offset) * 2)";
+		left: 0;
+	}
 }
 
 // Emacs-like `^L' notation
