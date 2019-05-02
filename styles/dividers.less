@@ -3,7 +3,7 @@
 
 // Border-style form-feeds
 @{ff-border} @{ff-selector}{
-	&::before{
+	&:not(@{ff-inline})::before{
 		content: "";
 		position: absolute;
 		width: 100%;

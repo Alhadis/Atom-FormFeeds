@@ -10,6 +10,7 @@ This project honours [Semantic Versioning](http://semver.org/).
 ------------------------------------------------------------------------
 * **Fixed:** Borders overlapping text on same line
 * **Fixed:** Borders not centred correctly when changing line-height
+* **Changed:** Dividers without an adjacent newline are now concealed
 
 
 
