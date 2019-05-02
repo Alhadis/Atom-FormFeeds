@@ -48,9 +48,8 @@
 	},
 	"devDependencies": {
 		"@alhadis/eslint-config": "^1.2.0",
-		"atom-mocha": "^2.0.7",
-		"mocha":      ">=5.2.0",
-		"chai":       ">=4.2.0",
-		"eslint":     "^5.9.0"
+		"atom-mocha": "^2.1.1",
+		"eslint":     "^5.16.0",
+		"mocha-when": "^1.0.0"
 	}
 }
