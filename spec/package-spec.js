@@ -86,8 +86,9 @@ describe("Form-feeds", function(){
 		});
 		
 		describe("Display", () => {
-			const getFeeds = () => editor.element.querySelectorAll(".syntax--form-feed");
-			const border = {borderWidth: "1px 0px 0px", borderStyle: "solid none none", height: "1px"};
+			const getFeeds = () => editor.getElement().querySelectorAll(".syntax--form-feed");
+			const hairline = {borderWidth: "1px 0px 0px", borderStyle: "solid none none", height: "1px"};
+			const lineLength = el => el.closest(".line").getBoundingClientRect().width;
 			
 			it("centres isolated dividers vertically", () =>
 				assertCentred("10.8px"));
@@ -151,12 +152,12 @@ describe("Form-feeds", function(){
 				feeds.should.have.lengthOf(1);
 				
 				const style = window.getComputedStyle(feeds[0], "before");
-				const width = editor.getElement().getWidth() + "px";
-				style.should.include({...border, width, margin: `${midpoint} 0px 0px`});
+				style.should.include({...hairline, margin: `${midpoint} 0px 0px`});
+				parseFloat(style.width).should.be.at.least(lineLength(feeds[0]));
 			}
 			
 			async function assertBorders(bottomEdge){
-				let feeds, style, width;
+				let feeds, style;
 				
 				// Above
 				editor.setText("\n\fABC\n");
@@ -164,8 +165,8 @@ describe("Form-feeds", function(){
 				feeds = getFeeds();
 				feeds.should.have.lengthOf(1);
 				style = window.getComputedStyle(feeds[0], "before");
-				width = editor.getElement().getWidth() + "px";
-				style.should.include({...border, width, margin: "0px"});
+				style.should.include({...hairline, margin: "0px"});
+				parseFloat(style.width).should.be.at.least(lineLength(feeds[0]));
 				
 				// Below
 				editor.setText("\nABC\f\n");
@@ -173,17 +174,22 @@ describe("Form-feeds", function(){
 				feeds = getFeeds();
 				feeds.should.have.lengthOf(1);
 				style = window.getComputedStyle(feeds[0], "before");
-				width = editor.getElement().getWidth() + "px";
-				style.should.include({...border, width, margin: `${bottomEdge} 0px 0px`});
+				style.should.include({...hairline, margin: `${bottomEdge} 0px 0px`});
+				parseFloat(style.width).should.be.at.least(lineLength(feeds[0]));
 				
-				// Both
+				// Both at once
 				editor.setText("\n\fABC\f\n");
 				await wait(250);
-				width = editor.getElement().getWidth() + "px";
 				feeds = getFeeds();
 				feeds.should.have.lengthOf(2);
-				window.getComputedStyle(feeds[0], "before").should.include({...border, width, margin: "0px"});
-				window.getComputedStyle(feeds[1], "before").should.include({...border, width, margin: `${bottomEdge} 0px 0px`});
+				
+				style = window.getComputedStyle(feeds[0], "before");
+				style.should.include({...hairline, margin: "0px"});
+				parseFloat(style.width).should.be.at.least(lineLength(feeds[0]));
+				
+				style = window.getComputedStyle(feeds[1], "before");
+				style.should.include({...hairline, margin: `${bottomEdge} 0px 0px`});
+				parseFloat(style.width).should.be.at.least(lineLength(feeds[1]));
 			}
 		});
 		
