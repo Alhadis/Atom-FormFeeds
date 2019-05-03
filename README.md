@@ -3,6 +3,7 @@ Form-feed support for Atom
 
 [![Build status: TravisCI][TravisCI-badge]][TravisCI-link]
 [![Build status: AppVeyor][AppVeyor-badge]][AppVeyor-link]
+[![Latest package version][APM-badge]][APM-link]
 
 
 Display form-feed characters (`U+000C`) as horizontal dividers in source code.
@@ -53,3 +54,5 @@ More info
 [TravisCI-link]:  https://travis-ci.org/Alhadis/Atom-FormFeeds
 [AppVeyor-badge]: https://ci.appveyor.com/api/projects/status/82ue5mapkwsj6x7l?svg=true
 [AppVeyor-link]:  https://ci.appveyor.com/project/Alhadis/atom-formfeeds
+[APM-badge]:      https://img.shields.io/apm/v/form-feeds.svg?colorB=brightgreen
+[APM-link]:       https://atom.io/packages/form-feeds
