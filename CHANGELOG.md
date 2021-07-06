@@ -6,6 +6,12 @@ This project honours [Semantic Versioning](http://semver.org/).
 [Unpublished]: ../../compare/v1.1.0...HEAD
 
 
+[Unpublished]
+------------------------------------------------------------------------
+* **Fixed:** Borders missing unless `editor.showInvisibles` is enabled
+
+
+
 [v1.1.0]
 ------------------------------------------------------------------------
 **May 3rd, 2019**  
