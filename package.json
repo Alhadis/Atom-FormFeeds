@@ -31,7 +31,11 @@
 			},{
 				"value": "caret",
 				"title": "Caret notation",
-				"description": "Render form-feeds as `^L` using caret notation."
+				"description": "Caret notation (^L)"
+			},{
+				"value": "escape",
+				"title": "C-style escape",
+				"description": "C-style escape (\\f)"
 			}]
 		}
 	},

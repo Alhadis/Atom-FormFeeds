@@ -71,8 +71,12 @@ describe("Form-feeds", function(){
 				atom.config.get("form-feeds.placeholderStyle").should.equal("border");
 				document.body.should.have.class("ff-style-border");
 				
-				atom.config.set("form-feeds.placeholderStyle", "caret");
+				atom.config.set("form-feeds.placeholderStyle", "escape");
 				document.body.should.not.have.class("ff-style-border");
+				document.body.should.have.class("ff-style-escape");
+				
+				atom.config.set("form-feeds.placeholderStyle", "caret");
+				document.body.should.not.have.class("ff-style-escape");
 				document.body.should.have.class("ff-style-caret");
 				
 				atom.config.set("form-feeds.placeholderStyle", "none");

@@ -8,6 +8,7 @@ This project honours [Semantic Versioning](http://semver.org/).
 
 [Unpublished]
 ------------------------------------------------------------------------
+* **Added:** A new placeholder style for displaying form-feeds as `\f`
 * **Fixed:** Borders missing unless `editor.showInvisibles` is enabled
 
 

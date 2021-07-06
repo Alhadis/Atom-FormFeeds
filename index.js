@@ -20,6 +20,7 @@ module.exports = {
 			const classes = document.body.classList;
 			classes.toggle("ff-style-border", "border" === type);
 			classes.toggle("ff-style-caret",  "caret"  === type);
+			classes.toggle("ff-style-escape", "escape" === type);
 			classes.toggle("ff-style-none",   "none"   === type);
 		}));
 		

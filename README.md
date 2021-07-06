@@ -15,7 +15,7 @@ Inspired by the [MELPA package](https://github.com/wasamasa/form-feed) of the sa
 
 Features:
 ---------
-* Render form-feeds as horizontal dividers or as `^L` (using [caret notation][])
+* Render form-feeds as horizontal dividers, as `\f`, or as `^L` ([caret notation][])
 * Snippets for inserting form-feeds: `\f`, `^L`
 * Editor commands (without default keybindings)
 	*	`form-feeds:go-to-prev-feed`

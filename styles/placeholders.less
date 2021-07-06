@@ -1,7 +1,7 @@
 @import "./variables.less";
 :root{ --form-feed-offset: .7em; }
 
-// Border-style form-feeds
+// Horizontal borders
 @{ff-border} @{ff-selector}{
 	&:not(@{ff-inline}){
 		&::before{
@@ -30,9 +30,16 @@
 	}
 }
 
-// Emacs-like `^L' notation
+// Caret notation
 @{ff-caret} @{ff-selector}::before{
 	content: "^L";
+	width: 1em;
+	color: #f00;
+}
+
+// C-style escape sequence
+@{ff-escape} @{ff-selector}::before{
+	content: "\\f";
 	width: 1em;
 	color: #f00;
 }
