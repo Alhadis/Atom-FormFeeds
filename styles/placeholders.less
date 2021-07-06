@@ -38,8 +38,11 @@
 }
 
 // C-style escape sequence
-@{ff-escape} @{ff-selector}::before{
-	content: "\\f";
-	width: 1em;
-	color: #f00;
+@{ff-selector}{
+	@{ff-escape} &::before,
+	@{ff-border} &@{ff-inline}::before{
+		content: "\\f";
+		width: 1em;
+		color: #f00;
+	}
 }

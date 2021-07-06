@@ -100,17 +100,18 @@ describe("Form-feeds", function(){
 			it("avoids superimposing dividers over text", () =>
 				assertBorders("19.6px"));
 			
-			it("hides border if form-feed is surrounded by text", async () => {
-				editor.setText("\nABC\fXYZ\n");
+			it("renders dividers surrounded by text as `\\f`", async () => {
+				editor.setText("\n\\f\fXYZ\n");
 				await wait(150);
 				const feeds = getFeeds();
 				feeds.should.have.lengthOf(1);
 				window.getComputedStyle(feeds[0], "before").should.include({
+					content: String.raw `"\\f"`,
 					borderWidth: "0px",
 					borderStyle: "none",
 					display: "inline",
 					position: "static",
-					width: "auto",
+					width: atom.config.get("editor.fontSize") + "px",
 					height: "auto",
 				});
 			});
