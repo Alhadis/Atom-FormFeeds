@@ -1,0 +1,21 @@
+.DS_Store
+Thumbs.db
+coverage
+Desktop.ini
+node_modules
+.nyc_output
+._*
+.\#*
+\#*\#
+*~
+*.lock
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+/.atom-ci
+/test.*
+
+# Project-specific
+package-lock.json
+*.zip
