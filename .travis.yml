@@ -10,13 +10,14 @@ os: osx
 
 env:
     - ATOM_CHANNEL=stable
+      NODE_REDIRECT_WARNINGS=/dev/null
+
     - ATOM_CHANNEL=beta
+      NODE_REDIRECT_WARNINGS=/dev/null
 
 notifications:
     email:
         on_success: never
         on_failure: change
 
-script: |
-    export NODE_REDIRECT_WARNINGS=/dev/null
-    curl -sL https://git.io/fji1w | sh
+script: curl -sL https://git.io/fji1w | sh
