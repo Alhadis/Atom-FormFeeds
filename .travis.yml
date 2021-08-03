@@ -4,16 +4,15 @@ branches:
 git:
     depth: 10
 
-language: cpp
+language: node_js
+
+node_js: 12
 
 os: osx
 
 env:
     - ATOM_CHANNEL=stable
-      NODE_REDIRECT_WARNINGS=/dev/null
-
     - ATOM_CHANNEL=beta
-      NODE_REDIRECT_WARNINGS=/dev/null
 
 notifications:
     email:
