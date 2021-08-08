@@ -58,7 +58,7 @@
 	},
 	"devDependencies": {
 		"@alhadis/eslint-config": "^2.3.3",
-		"atom-mocha": "^2.2.2",
+		"atom-mocha": "Alhadis/Atom-Mocha",
 		"eslint":     "^7.32.0"
 	}
 }
