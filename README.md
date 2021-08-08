@@ -1,7 +1,7 @@
 Form-feed support for Atom
 ==========================
 
-[![Build status: TravisCI][TravisCI-badge]][TravisCI-link]
+[![Build status: GitHub Actions][Actions-badge]][Actions-link]
 [![Build status: AppVeyor][AppVeyor-badge]][AppVeyor-link]
 [![Latest package version][APM-badge]][APM-link]
 
@@ -50,9 +50,9 @@ More info
 * [_“What are carriage return, linefeed, and form feed?”_](https://stackoverflow.com/a/3098328)
 
 [Caret notation]: https://en.wikipedia.org/wiki/Caret_notation
-[TravisCI-badge]: https://travis-ci.com/Alhadis/Atom-FormFeeds.svg?branch=master
-[TravisCI-link]:  https://travis-ci.com/Alhadis/Atom-FormFeeds
-[AppVeyor-badge]: https://ci.appveyor.com/api/projects/status/82ue5mapkwsj6x7l?svg=true
+[Actions-badge]:  https://img.shields.io/github/workflow/status/Alhadis/Atom-FormFeeds/Atom%20CI?label=GitHub%20Actions&logo=github
+[Actions-link]:   https://github.com/Alhadis/Atom-FormFeeds/actions
+[AppVeyor-badge]: https://img.shields.io/appveyor/build/Alhadis/atom-formfeeds?label=AppVeyor&logo=appveyor&logoColor=white
 [AppVeyor-link]:  https://ci.appveyor.com/project/Alhadis/atom-formfeeds
 [APM-badge]:      https://img.shields.io/apm/v/form-feeds.svg?colorB=brightgreen
 [APM-link]:       https://atom.io/packages/form-feeds
